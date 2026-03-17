@@ -1,0 +1,75 @@
+meta:
+  title: "灯塔守望者"
+  author: "AIVN Demo Studio"
+
+characters:
+  mari:
+    name: "Mari"
+    model: "characters/mari.glb"
+    description: "年轻的灯塔守护者，短发，风衣，目光坚定"
+    default_expression: "neutral"
+
+scenes:
+  - id: opening
+    setting: >
+      暴风雨前的悬崖，破旧灯塔矗立在暮色中。
+      海风呼啸，乌云从地平线翻滚而来。
+    background:
+      style: "watercolor anime"
+      mood: "melancholic"
+    direction:
+      - narration: "暴风雨酝酿了一整个下午。乌云从海面上翻滚而来，空气中弥漫着潮湿的咸味。"
+        characters:
+          mari: { position: right, expression: neutral }
+      - narration: "那座灯塔已经在悬崖上矗立了一百多年。油漆斑驳，铁锈蔓延，却依然倔强地站在那里。"
+      - dialogue:
+          speaker: mari
+          line: "又一场暴风雨要来了……这次看起来不太一样。"
+      - dialogue:
+          speaker: mari
+          intent: "她紧张但故作勇敢，决心守护灯塔"
+      - choice:
+          prompt: "Mari 决定……"
+          options:
+            - text: "点亮灯塔，迎接暴风雨"
+              leads_to: light_the_lamp
+            - text: "先检查灯塔的结构安全"
+              leads_to: inspect_tower
+            - text: "[让AI决定]"
+              ai_generate: true
+
+  - id: light_the_lamp
+    setting: >
+      灯塔内部，螺旋楼梯通向顶端的灯室。
+      昏暗的光线从窗缝中渗入，空气中飘着机油味。
+    background:
+      style: "watercolor anime"
+      mood: "mysterious"
+    direction:
+      - narration: "Mari 推开沉重的铁门，走进灯塔。"
+        characters:
+          mari: { position: center, expression: determined }
+      - dialogue:
+          speaker: mari
+          line: "爷爷说过，只要灯还亮着，船就能找到回家的路。"
+      - dialogue:
+          speaker: mari
+          line: "今晚，我一定要让它亮起来。"
+
+  - id: inspect_tower
+    setting: >
+      灯塔外围，可以看到斑驳的墙面和锈蚀的铁梯。
+      海浪拍打着悬崖下的礁石。
+    background:
+      style: "watercolor anime"
+      mood: "tense"
+    direction:
+      - narration: "Mari 围着灯塔走了一圈，仔细检查每一处墙面。"
+        characters:
+          mari: { position: left, expression: worried }
+      - dialogue:
+          speaker: mari
+          line: "这里的裂缝比上次来的时候更大了……"
+      - dialogue:
+          speaker: mari
+          intent: "她发现了一些让人不安的迹象"
