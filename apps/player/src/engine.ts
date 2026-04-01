@@ -54,11 +54,13 @@ export class Engine {
         const step = this.currentScene.steps[this.stepIndex];
         if (step.type === 'choice') {
           const option = step.options[index];
-          if (option.leadsTo) {
+          if (option.leadsTo && this.aiDirector.getContext()) {
+            // Only handle internally when a script is loaded
             this.playScene(option.leadsTo);
-          } else {
+          } else if (!option.leadsTo) {
             this.advanceStep();
           }
+          // If no script loaded, let external handlers (main.ts) handle navigation
         }
       }
     });

@@ -1,5 +1,4 @@
 import type { EventBus, BackgroundSpec } from '@aivn/core';
-import { get, set } from 'idb-keyval';
 
 /**
  * ComfyUI client — Phase 3 implementation.
@@ -7,6 +6,7 @@ import { get, set } from 'idb-keyval';
  */
 export class ComfyUIClient {
   private serverUrl: string;
+  private cache = new Map<string, string>();
 
   constructor(
     private eventBus: EventBus,
@@ -18,8 +18,7 @@ export class ComfyUIClient {
   async generateBackground(setting: string, spec?: BackgroundSpec): Promise<string> {
     const cacheKey = this.hashPrompt(setting + JSON.stringify(spec ?? {}));
 
-    // Check IndexedDB cache
-    const cached = await get<string>(`bg:${cacheKey}`);
+    const cached = this.cache.get(cacheKey);
     if (cached) {
       return cached;
     }
@@ -33,8 +32,7 @@ export class ComfyUIClient {
       // For now, return a placeholder gradient
       const url = this.generatePlaceholderBackground(setting, spec);
 
-      // Cache the result
-      await set(`bg:${cacheKey}`, url);
+      this.cache.set(cacheKey, url);
 
       this.eventBus.emit('background:ready', { url });
       return url;
